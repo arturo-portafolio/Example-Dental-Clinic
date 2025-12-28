@@ -70,10 +70,6 @@ export function Navigation() {
 
         {/* Mobile Menu */}
         <div className="lg:hidden flex items-center gap-4">
-          <a href="tel:+1234567890" className="bg-primary/10 px-3 py-1.5 rounded-full text-primary font-medium text-sm">
-            +1 (555) 123-4567
-          </a>
-          
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon">
