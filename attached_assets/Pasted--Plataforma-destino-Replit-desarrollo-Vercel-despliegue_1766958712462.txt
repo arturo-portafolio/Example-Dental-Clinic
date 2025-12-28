@@ -1,0 +1,433 @@
+```
+Plataforma destino: Replit (desarrollo) + Vercel (despliegue, sin problemas de compatibilidad)
+
+Objetivo
+- Construir una aplicación web moderna, rápida y responsive (contenido SOLO en inglés) para la clínica dental ficticia “BrightSmile Dental” en “Lakeshore Haven, Aurora State”.
+- IMPORTANTE: No usar NINGUNA base de datos. No conectar NADA a Replit ni a ningún motor de base de datos.
+- Incluir:
+  - Front-end completo (páginas/sections: Home, Services, Before & After, Meet the Team, Promotions, FAQ, Contact, Google Reviews).
+  - Header completamente fijo (“sticky”) pegado arriba, que NO se desplace con el scroll.
+  - Botón flotante estilo WhatsApp.
+  - Local SEO (titles/meta, NAP consistente, schema JSON-LD tipo Dentist/LocalBusiness).
+  - Estructura de “server”/API (archivos de backend) que HOY solo devuelven datos estáticos en memoria, sin persistencia, pero con arquitectura clara para que en el futuro se pueda conectar una base de datos si el desarrollador lo desea.
+  - Panel de administración (UI + rutas API) que funcione en modo DEMO: estructura completa, pero sin persistir cambios (mock en memoria), claramente preparado para conectar una base de datos más adelante.
+
+Alcance (MVP sin base de datos)
+- Sitio público completamente funcional con contenido estático inicial y navegación.
+- Admin panel (UI) funcional a nivel de interfaz y llamadas a API, pero:
+  - Sin ningún tipo de almacenamiento persistente (NO DB, NO archivos de disco).
+  - Respuestas de las rutas admin simuladas (mock) usando estructuras en memoria y/o constantes estáticas.
+- API/“server” implementado vía rutas de API (por ejemplo Next.js /app/api o /pages/api), retornando datos estáticos de arrays/objetos locales.
+- Código y estructura totalmente compatibles con despliegue en Vercel (sin servidores personalizados, sin dependencias incompatibles).
+
+Restricciones críticas (muy importante)
+- PROHIBIDO:
+  - Usar Replit DB.
+  - Usar SQLite, Postgres, MySQL, MongoDB, Supabase, Prisma, etc.
+  - Leer o escribir datos a archivos para persistir contenido (el filesystem en Vercel es efímero).
+  - Cualquier tipo de persistencia de datos en el backend.
+- PERMITIDO:
+  - Datos estáticos definidos en archivos JS/TS (por ejemplo /data/staticData.ts).
+  - Mock de “repositorios” o “services” que lean de esos datos estáticos.
+  - Estructura y comentarios tipo TODO para que en el futuro se pueda enchufar una DB real, pero sin implementar la conexión ahora.
+
+Roles de usuario
+- Visitor (público):
+  - Navega por Home, Services, Before & After, Meet the Team, Promotions, FAQ, Contact, Google Reviews.
+  - Usa CTA “Book an Appointment”, “Call Now” y botón flotante tipo WhatsApp.
+  - Puede enviar el formulario de Contact (se gestiona en modo demo: se muestra mensaje de éxito, sin guardar en DB).
+  - Puede usar botones “Read Reviews on Google” y “Write a Review”.
+  - Opcionalmente ve 3–5 reseñas recientes desde Google Places API (solo lectura, sin almacenar).
+- Admin (demo):
+  - Accede a /admin con login simple (email y password definidos en variables de entorno).
+  - Ve pantallas para editar:
+    - Textos de la homepage (hero, subheadline, labels de CTAs).
+    - Servicios y precios.
+    - Promociones.
+    - Miembros del equipo.
+    - Imágenes/textos del Before & After.
+    - Contact info, NAP, horarios, Google Place ID, Google Maps embed URL, WhatsApp phone, booking URL.
+  - Las acciones de guardar funcionan a nivel de UI y API, pero en modo DEMO:
+    - Operan sobre copias en memoria y/o devuelven el payload sin persistir.
+    - Una recarga de la página vuelve a los datos estáticos iniciales.
+  - Código preparado para que un desarrollador pueda cambiar fácilmente las funciones de mock y conectarlas a una DB real.
+
+Funcionalidades clave (front-end)
+- Diseño visual:
+  - Estilo limpio y confiable.
+  - Colores:
+    - Fondo: blanco (#FFFFFF).
+    - Acento principal: azul suave (#4DA6FF o similar).
+    - Secundario: gris muy claro (#F5F7FB).
+    - Texto: gris oscuro (#1F2933).
+  - Tipografía: sans-serif moderna (Inter, Roboto, etc.).
+- Header:
+  - Completamente fijo en la parte superior: usar CSS con position: fixed; top: 0; width: 100%; z-index alto.
+  - Logo de texto “BrightSmile Dental” + posible icono de diente.
+  - Menú con links: Home, Services, Before & After, Team, Promotions, FAQ, Contact.
+  - Botón “Book an Appointment” en el header (desktop).
+  - En mobile: menú hamburguesa que abre un panel, manteniendo el header siempre fijo.
+- Botón flotante estilo WhatsApp:
+  - Botón circular en la esquina inferior derecha, visible en todas las páginas.
+  - Color de fondo azul suave y icono de chat/WhatsApp-style.
+  - Acción por defecto: link a https://wa.me/[PHONE]?text=[mensaje codificado], usando número configurado en settings.
+- Home:
+  - Hero (texto SOLO en inglés):
+    - Headline ejemplo: “BrightSmile Dental in Lakeshore Haven”
+    - Subheadline ejemplo: “Gentle, modern dentistry for healthy, confident smiles.”
+    - CTA primaria: “Book an Appointment” → scroll suave a Contact o URL de booking configurable.
+    - CTA secundaria: “Call Now” → tel:+15551234567 (click-to-call).
+  - Bloque de highlights (3–4 cards con títulos breves).
+  - Vista previa de servicios principales (cards para Cleanings, Whitening, Invisalign, Implants).
+  - Vista previa de promociones activas.
+- Services:
+  - Sección/página con cards para:
+    - Cleanings
+    - Whitening
+    - Invisalign
+    - Implants
+    - Emergency Dentistry
+  - Cada card:
+    - Nombre del servicio.
+    - Descripción corta (2–4 líneas).
+    - Línea opcional “Starting at $X”.
+    - Botón “Book this service” → scroll a Contact y preselección del servicio en el formulario (solo front-end).
+- Before & After Gallery:
+  - Grid de cards responsivas.
+  - Cada card:
+    - Imagen Before y After en layout side-by-side o slider.
+    - Caption (ej. “Teeth Whitening”).
+    - Descripción corta opcional.
+- Meet the Team:
+  - Cards con:
+    - Foto, nombre, rol (ej. “Lead Dentist”).
+    - Credenciales y bio corta.
+- Promotions:
+  - 2–3 ofertas activas (ej. “New Patient Exam & Cleaning – $99”).
+  - Cada promoción:
+    - Título, descripción, detalles.
+    - Fechas de inicio/fin (para mostrar copia tipo “Valid through…”).
+    - Botón “Book Now” → scroll a Contact.
+- FAQ:
+  - Acordeón con 5–8 preguntas frecuentes.
+  - Estructura accesible (ARIA, focus keyboard, etc.).
+- Contact:
+  - NAP (en inglés) siempre igual:
+    - Name: BrightSmile Dental
+    - Address: “123 Lakeside Avenue, Suite 200, Lakeshore Haven, Aurora State 12345”
+    - Phone: “+1 (555) 123-4567”
+    - Email: “info@brightsmiledental.com”
+  - Office hours en tabla:
+    - Mon–Thu: 8:00 AM – 5:00 PM
+    - Fri: 8:00 AM – 1:00 PM
+    - Sat–Sun: Closed
+  - Formulario:
+    - Full Name (required)
+    - Email (required, formato email)
+    - Phone (optional)
+    - Preferred Date/Time (optional)
+    - Service of interest (dropdown con servicios + “General Question”)
+    - Message (required, min length)
+    - Checkbox opcional de aceptación de política de privacidad.
+  - Comportamiento en modo demo:
+    - Validación en front.
+    - Llamada a API (POST /api/contact) que responde success sin almacenar ni mandar email real.
+    - Estructura del handler lista para enchufar un servicio de email más adelante (comentarios TODO).
+  - Google Map placeholder:
+    - Contenedor con iframe de Google Maps usando una URL embed configurable.
+    - Si no hay URL configurada, mostrar texto “Map coming soon” + enlace a Google Maps con la dirección.
+
+Google Reviews (sin DB)
+- Sección (en Home o Contact) con:
+  - Texto corto: “Patients love BrightSmile Dental. Read what they’re saying on Google.”
+  - Botón “Read Reviews on Google”:
+    - Link: https://search.google.com/local/reviews?placeid=[PLACE_ID]
+  - Botón “Write a Review”:
+    - Link: https://search.google.com/local/writereview?placeid=[PLACE_ID]
+  - [PLACE_ID] se lee de configuración estática (por ejemplo, archivo /data/settings.ts) y se puede exponer también desde /api/settings/public.
+- Opcional: listado de 3–5 reseñas recientes (solo lectura):
+  - Endpoint /api/google-reviews:
+    - Llama a Google Places API usando GOOGLE_API_KEY y PLACE_ID, si están configurados.
+    - Devuelve una lista de reviews sin guardar en ningún sitio (ni DB, ni archivos).
+    - Se puede meter una caché temporal en memoria (variable estática de módulo) opcional, pero sin persistencia.
+  - UI:
+    - Si la llamada tiene éxito: mostrar cards con nombre, rating (estrellas), fecha relativa, snippet.
+    - Si falla o no está configurado: mostrar solo botones y mensaje tipo “Check out our reviews on Google.”
+
+SEO y local SEO
+- Titles y meta:
+  - Utilizar react-helmet-async o equivalente (o en Next.js, metadata en cada página).
+  - Ejemplos:
+    - Home title: “BrightSmile Dental | Dentist in Lakeshore Haven, Aurora State”
+    - Home description: “BrightSmile Dental offers gentle, modern dentistry in Lakeshore Haven, Aurora State. Cleanings, whitening, Invisalign, implants, and emergency dentistry.”
+  - Cada página con título y descripción descriptivos.
+- URLs limpias:
+  - /
+  - /services
+  - /before-after
+  - /team
+  - /promotions
+  - /faq
+  - /contact
+- Schema JSON-LD (Dentist/LocalBusiness):
+  - Script <script type="application/ld+json"> en el <head> (por ejemplo, layout principal en Next.js).
+  - Datos:
+    - @context, @type: "Dentist"
+    - name: "BrightSmile Dental"
+    - url: BASE_URL
+    - telephone: "+1 (555) 123-4567"
+    - email: "info@brightsmiledental.com"
+    - address (PostalAddress):
+      - streetAddress: "123 Lakeside Avenue, Suite 200"
+      - addressLocality: "Lakeshore Haven"
+      - addressRegion: "Aurora State"
+      - postalCode: "12345"
+      - addressCountry: "US"
+    - openingHoursSpecification (Lunes–Viernes según horarios).
+  - Asegurar que el NAP coincide EXACTAMENTE con lo mostrado en la página.
+- Open Graph / Twitter:
+  - og:title, og:description, og:url, og:image.
+  - twitter:card, twitter:title, twitter:description.
+
+Admin panel (modo DEMO sin persistencia)
+- Acceso:
+  - Ruta /admin (página cliente).
+  - Login simple:
+    - Email y password tomados de variables de entorno (por ejemplo NEXT_PUBLIC_ADMIN_EMAIL no debe usarse para password; el password debe permanecer solo en el server).
+    - Petición POST /api/admin/login que compara con valores de env y genera una cookie/sesión simple en memoria (nota: sin DB).
+  - Importante: no guardar sesiones en DB; usar tokens/cookies firmadas o en memoria.
+- Layout admin:
+  - Sidebar con enlaces:
+    - Dashboard
+    - Homepage content
+    - Services
+    - Promotions
+    - Team
+    - Gallery
+    - FAQ
+    - Contact & NAP
+    - Google & SEO
+  - Área principal con formularios.
+- Comportamiento DEMO:
+  - Al hacer “Save”, el front envía PUT/POST a rutas /api/admin/**.
+  - El backend:
+    - Valida la data.
+    - Devuelve la misma data como respuesta.
+    - NO modifica los arrays estáticos ni guarda en ningún sitio.
+    - Puede mantener una copia en memoria (variable de módulo) para la sesión actual, sabiendo que se perderá en un redeploy/restart (sin DB).
+    - Incluir comentarios TODO que indiquen dónde conectar a una DB real.
+  - El front:
+    - Muestra los cambios en la UI basándose en la respuesta del servidor.
+    - Al recargar toda la app, se vuelve a los datos estáticos de /data.
+
+Modelo de datos (conceptual, implementado con datos estáticos)
+- Definir interfaces TypeScript (por ejemplo en /lib/models.ts):
+  - Service, Promotion, TeamMember, GalleryItem, FAQItem, ContactRequest, SiteSettings.
+- Implementar datos iniciales en archivos de datos estáticos (por ejemplo /data/services.ts, /data/settings.ts):
+  - Cada archivo exporta arrays/objetos de ejemplo.
+  - No hay escritura sobre estos archivos.
+- Ejemplo de interfaces:
+  - Service:
+    - id, name, slug, description, startingAtPrice?, category?, sortOrder, published.
+  - Promotion, TeamMember, GalleryItem, FAQItem, SiteSettings (NAP, horarios, etc.).
+- ContactRequest:
+  - Solo interfaz; no se utiliza para almacenar en DB.
+  - El handler de /api/contact puede loguear la request en consola y devolver success.
+
+Estructura de carpetas sugerida (Next.js compatible con Vercel)
+- /
+  - app/ (o pages/ si se usa router clásico)
+    - layout.tsx / layout.js
+    - page.tsx (Home)
+    - services/page.tsx
+    - before-after/page.tsx
+    - team/page.tsx
+    - promotions/page.tsx
+    - faq/page.tsx
+    - contact/page.tsx
+    - admin/
+      - page.tsx (login + dashboard)
+    - api/
+      - contact/route.ts (Next 13+) o /pages/api/contact.ts
+      - google-reviews/route.ts
+      - admin/
+        - login/route.ts
+        - services/route.ts
+        - promotions/route.ts
+        - team/route.ts
+        - gallery/route.ts
+        - faq/route.ts
+        - settings/route.ts
+  - components/
+    - Header.tsx (header fijo)
+    - Footer.tsx
+    - Hero.tsx
+    - ServiceCard.tsx
+    - PromotionCard.tsx
+    - TeamCard.tsx
+    - GalleryCard.tsx
+    - FAQAccordion.tsx
+    - ContactForm.tsx
+    - GoogleReviewsSection.tsx
+    - WhatsAppFloatingButton.tsx
+  - data/
+    - services.ts
+    - promotions.ts
+    - team.ts
+    - gallery.ts
+    - faq.ts
+    - settings.ts
+  - lib/
+    - models.ts (interfaces)
+    - seo.ts (helpers para metadata)
+    - googleReviews.ts (función que llama a Places API sin persistir).
+  - public/
+    - imágenes estáticas (logos, placeholders, before/after, etc.)
+  - next.config.js
+  - package.json
+  - tsconfig.json
+  - vercel.json (si se desea configuración explícita).
+
+Endpoints API (modo estático/mock)
+- GET /api/services
+  - Devuelve lista de servicios desde /data/services.ts.
+- GET /api/promotions
+  - Devuelve promociones “activas” según flags y fechas definidas ESTÁTICAMENTE en /data/promotions.ts.
+- GET /api/team
+  - Devuelve miembros activos desde /data/team.ts.
+- GET /api/gallery
+  - Devuelve items desde /data/gallery.ts, con filtro opcional por ?category.
+- GET /api/faq
+  - Devuelve preguntas desde /data/faq.ts.
+- GET /api/settings/public
+  - Devuelve NAP, horarios y configuración pública desde /data/settings.ts.
+- POST /api/contact
+  - Valida el body.
+  - Sin DB: no guarda nada, puede imprimir en consola.
+  - Devuelve { success: true }.
+  - Incluir comentarios TODO para integración futura con servicio de email.
+- GET /api/google-reviews
+  - Si GOOGLE_API_KEY y PLACE_ID están definidos: llama a Places API y devuelve reviews.
+  - Si no: devuelve un error controlado (ej. { error: "Not configured" }).
+
+Rutas admin (mock sin persistir)
+- POST /api/admin/login
+  - Compara email/password con variables de entorno (por ejemplo ADMIN_EMAIL, ADMIN_PASSWORD).
+  - Devuelve token/cookie de sesión simple (sin DB).
+- POST /api/admin/logout
+  - Invalida la cookie/token (en memoria o expira).
+- GET /api/admin/me
+  - Devuelve datos básicos del admin si el token/cookie es válido.
+- CRUD endpoints (services, promotions, team, gallery, faq, settings):
+  - GET: devuelve datos desde /data/**.
+  - POST/PUT/DELETE:
+    - Devuelven “éxito” y los datos enviados, pero NO modifican /data/** real.
+    - Se puede mantener una variable en memoria para simular cambios en la sesión actual, sabiendo que se perderán al reiniciar.
+    - Incluir comentarios TODO indicando dónde conectar con DB real.
+
+Reglas de negocio
+- Todo el contenido visible a visitantes debe estar en inglés.
+- NAP debe ser EXACTO en:
+  - Footer.
+  - Contact.
+  - Schema JSON-LD.
+- No implementar ningún almacenamiento persistente de datos.
+- No usar ninguna librería de base de datos ni Replit DB.
+- Google reviews:
+  - Solo lectura.
+  - No guardar reseñas en ninguna estructura persistente.
+- Admin:
+  - Un único usuario admin definido vía variables de entorno.
+  - No hay registro público de usuarios.
+
+Integraciones (todas opcionales y preparadas, sin extras obligatorios)
+- Google Maps:
+  - Usar un iframe con URL configurable en /data/settings.ts.
+- Google Places API:
+  - Función wrapper en /lib/googleReviews.ts que lee API key de process.env.
+  - No caching persistente.
+- Email:
+  - Dejar el código preparado con TODOs para integrar un proveedor (SendGrid, etc.), pero NO incluir integración real si se quiere mantener todo completamente estático.
+
+Autenticación y autorización (sin DB)
+- Usar tokens/cookies firmadas en memoria o JWT, pero sin guardarlos en DB.
+- Middleware/guardas en rutas API admin para comprobar autenticación.
+- Página /admin debe comprobar el estado de login y redirigir a login si no hay sesión.
+- Añadir meta noindex/nofollow para rutas de admin.
+
+Validaciones y estados de error
+- Contact form:
+  - Required y formatos en front-end.
+  - Validación adicional en /api/contact.
+- Admin forms:
+  - Validar campos obligatorios y formatos (URLs, emails).
+- Manejo de errores:
+  - Devolver JSON con error y status apropiado.
+  - Mostrar mensajes claros en UI (banners, toasts).
+- Google Reviews:
+  - Fallback limpio si falla la API.
+
+UX / Accesibilidad
+- Layout responsive (mobile-first).
+- Header fijo arriba (no se mueve con scroll).
+- Contraste adecuado.
+- Navegación por teclado y enfoque visible.
+- Atributos ARIA en acordeones, menús y modales.
+- Alt text descriptivo en imágenes clave.
+
+Requisitos técnicos (stack compatible Replit + Vercel)
+- Usar Next.js (app router o pages router estándar):
+  - Compatible directamente con Vercel (sin servidor personalizado).
+  - Ejecutable en Replit con `npm run dev`.
+- Lenguaje: TypeScript preferible.
+- Estilos:
+  - Tailwind CSS o CSS modules.
+- Sin uso de APIs específicas de Replit ni de bases de datos.
+- Sin necesidad de un servidor Express personalizado. Usar solo las API routes de Next.js para máxima compatibilidad con Vercel.
+- Configuración:
+  - Script "dev": next dev.
+  - Script "build": next build.
+  - Script "start": next start.
+- vercel.json opcional para ajustar settings, pero no obligatorio.
+
+Semillas de datos iniciales (en /data/*.ts)
+- SiteSettings:
+  - clinicName: "BrightSmile Dental"
+  - address, city, state, postalCode, country, phone, email según NAP.
+  - officeHours: objeto/array con horarios por día.
+  - googleMapsEmbedUrl: placeholder.
+  - whatsappPhone: "+15551234567"
+  - bookingUrl: vacío o placeholder.
+  - googlePlaceId: placeholder.
+- Services:
+  - Cleanings, Whitening, Invisalign, Implants, Emergency Dentistry, con descriptions y startingAtPrice.
+- Promotions:
+  - 2–3 promociones de ejemplo.
+- Team:
+  - Al menos “Dr. Jane Smith, DDS – Lead Dentist”.
+- Gallery:
+  - 1–2 casos Before/After con imágenes placeholder.
+- FAQ:
+  - 5–8 preguntas frecuentes típicas.
+
+Pruebas y criterios de aceptación
+- Confirmar que:
+  - El header permanece fijo arriba al hacer scroll en todas las páginas.
+  - No existe ninguna referencia a Replit DB ni a ninguna DB externa.
+  - No hay ningún import de librerías de base de datos.
+  - El sitio arranca correctamente con `npm run dev` en Replit.
+  - El proyecto hace deploy sin errores en Vercel y las rutas /, /services, /before-after, /team, /promotions, /faq, /contact cargan correctamente.
+  - /admin carga el login y las llamadas a /api/admin/** funcionan en modo mock.
+  - JSON-LD se incluye correctamente en el head y el NAP es consistente.
+
+Despliegue / Configuración
+- Replit:
+  - Crear proyecto Node.js/Next.js.
+  - Instalar dependencias (next, react, react-dom, tailwind, etc.).
+  - Configurar entorno para `npm run dev`.
+- Vercel:
+  - Conectar el repositorio.
+  - Framework: Next.js (detectado automáticamente).
+  - Variables de entorno: ADMIN_EMAIL, ADMIN_PASSWORD, GOOGLE_API_KEY (opcional), etc.
+  - Deploy y test de todas las rutas.
+```
