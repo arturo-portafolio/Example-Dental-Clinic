@@ -70,8 +70,8 @@ export function Navigation() {
 
         {/* Mobile Menu */}
         <div className="lg:hidden flex items-center gap-4">
-          <a href="tel:+1234567890" className="bg-primary/10 p-2 rounded-full text-primary">
-            <Phone className="w-5 h-5" />
+          <a href="tel:+1234567890" className="bg-primary/10 px-3 py-1.5 rounded-full text-primary font-medium text-sm">
+            +1 (555) 123-4567
           </a>
           
           <Sheet>
@@ -93,10 +93,6 @@ export function Navigation() {
                     </span>
                   </Link>
                 ))}
-                <Button className="w-full mt-4 gap-2">
-                  <Calendar className="w-4 h-4" />
-                  Book Appointment
-                </Button>
               </div>
             </SheetContent>
           </Sheet>

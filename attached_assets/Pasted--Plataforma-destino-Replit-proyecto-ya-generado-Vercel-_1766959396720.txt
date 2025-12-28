@@ -1,0 +1,57 @@
+```
+Plataforma destino: Replit (proyecto ya generado) / Vercel
+
+Objetivo
+- Tomar el código YA GENERADO de la web de BrightSmile Dental y aplicar correcciones muy específicas al header y la navegación, sin cambiar nada más del sitio.
+
+Instrucciones de corrección (aplícalas sobre el código actual)
+- No modifiques estilos, textos, componentes ni lógica de otras secciones.
+- Solo toca el header y el menú de navegación según lo que sigue.
+
+Cambios requeridos en el header y navegación
+
+1) Quitar el símbolo de teléfono del header
+- Si en el header aparece un icono/símbolo de teléfono (por ejemplo, un SVG o un icono de librería) junto al número:
+  - Elimina por completo ese icono del JSX/HTML.
+- Mantén el número de teléfono como texto o enlace click-to-call (tel:+15551234567) si ya existe; solo elimina el icono gráfico.
+
+2) Menú hamburguesa SOLO en versión móvil
+- El botón de menú hamburguesa debe mostrarse únicamente en pantallas móviles.
+- Implementa esto con CSS/utility classes (por ejemplo, Tailwind) o media queries:
+  - En móvil (por ejemplo < 768px):
+    - Muestra el botón hamburguesa.
+    - Permite abrir/cerrar el panel desplegable con los enlaces de navegación, tal como ya funciona ahora.
+  - En escritorio (por ejemplo ≥ 768px):
+    - Oculta completamente el botón de menú hamburguesa (display: none).
+    - Muestra siempre los enlaces de navegación en línea (uno al lado del otro) dentro del header: Home, Services, Before & After, Team, Promotions, FAQ, Contact (o los que ya tengas).
+- Asegúrate de que el header siga siendo fijo arriba:
+  - Usa position: fixed; top: 0; width: 100%; z-index alto o la solución equivalente que ya tenía el proyecto.
+
+3) Eliminar el botón "Book Appointment" dentro del menú hamburguesa
+- Localiza el botón o elemento dentro del menú móvil (el panel del hamburguesa) que tiene el texto “Book Appointment” (o “Book an Appointment” si lo escribiste así).
+- Elimina ese botón/elemento del menú hamburguesa:
+  - NO debe aparecer en la versión móvil.
+  - NO debe aparecer en la versión de escritorio dentro de la navegación del header.
+- Importante:
+  - No borres el botón principal de la sección hero en la Home (el CTA grande “Book an Appointment” del contenido principal de la página) si existe ahí.
+  - El cambio es solo para el botón que está DENTRO del menú hamburguesa del header.
+
+Condición general
+- Todo lo demás debe permanecer EXACTAMENTE igual:
+  - No cambies colores, tipografías, tamaños ni márgenes fuera del header.
+  - No cambies el comportamiento de otras secciones (Home, Services, Before & After, Team, Promotions, FAQ, Contact, Google Reviews).
+  - No añadas rutas nuevas ni modifiques la estructura general del proyecto.
+
+Resultado esperado
+- En escritorio (desktop):
+  - Header fijo arriba.
+  - Sin icono de teléfono en el header.
+  - Menú hamburguesa oculto.
+  - Enlaces de navegación visibles en línea, uno al lado del otro.
+  - Sin botón “Book Appointment” dentro de la navegación del header.
+- En móvil:
+  - Header fijo arriba.
+  - Menú hamburguesa visible.
+  - Al abrir, se ven solo los enlaces de navegación (sin botón “Book Appointment”).
+  - Resto del sitio se ve y funciona exactamente igual que antes de estos cambios.
+```
