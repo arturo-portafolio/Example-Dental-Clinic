@@ -37,10 +37,12 @@ export function useUpdateService() {
 
 // === TEAM ===
 export function useTeam() {
+  const TEAM_PATH = "/api/team";
+
   return useQuery({
-    queryKey: [api.team.list.path],
+    queryKey: [TEAM_PATH],
     queryFn: async () => {
-      const res = await fetch(api.team.list.path);
+      const res = await fetch(TEAM_PATH);
       if (!res.ok) throw new Error("Failed to fetch team");
       return api.team.list.responses[200].parse(await res.json());
     },
