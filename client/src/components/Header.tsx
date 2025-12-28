@@ -51,10 +51,6 @@ export function Header() {
               </span>
             </Link>
           ))}
-          <Button size="sm" className="gap-2 rounded-full font-semibold shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all">
-            <Calendar className="w-4 h-4" />
-            Book Now
-          </Button>
         </div>
 
         {/* Mobile Menu */}
