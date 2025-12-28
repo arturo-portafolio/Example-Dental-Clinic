@@ -31,7 +31,7 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="space-y-8"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-sm text-primary font-semibold text-sm">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-sm text-primary font-semibold text-sm translate-y-2">
               <Star className="w-4 h-4 fill-primary" />
               Rated #1 Dental Clinic in City
             </div>
