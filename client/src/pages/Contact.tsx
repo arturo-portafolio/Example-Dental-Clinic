@@ -255,12 +255,7 @@ export default function Contact() {
               </div>
 
               {/* Map Placeholder */}
-              <div className="h-64 bg-gray-200 rounded-2xl overflow-hidden relative">
-                 <div className="absolute inset-0 flex items-center justify-center text-muted-foreground font-medium bg-secondary">
-                   <MapPin className="w-8 h-8 mb-2 block mx-auto opacity-50" />
-                   Google Maps Embed Placeholder
-                 </div>
-              </div>
+              <div className="h-64 bg-gray-200 rounded-2xl overflow-hidden relative"> <iframe title="BrightSmile Dental Location" className="w-full h-full border-0" loading="lazy" referrerPolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=123+Dental+Avenue,+Suite+100,+New+York,+NY+10001&output=embed" /> </div>
             </div>
           </div>
         </div>
