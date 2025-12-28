@@ -1,4 +1,4 @@
-import { Navigation } from "./Navigation";
+import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { WhatsAppButton } from "./WhatsAppButton";
 import { Helmet } from "react-helmet-async";
@@ -21,7 +21,7 @@ export function Layout({
         <meta name="description" content={description} />
       </Helmet>
       
-      <Navigation />
+      <Header />
       
       <main className="flex-grow pt-20">
         {children}

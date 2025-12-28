@@ -1,0 +1,113 @@
+````
+Plataforma destino: Replit (proyecto YA generado)
+
+Objetivo de esta instrucción puntual
+- Tomar el componente de navegación actual (Navigation) que ya está en el proyecto y:
+  1) Cambiar su nombre en TODO el proyecto a Header (componente y archivo).
+  2) Hacer que el header NO cambie ni se desplace visualmente cuando se hace scroll: debe quedarse fijo arriba con el mismo estilo siempre (sin efecto de “encogerse” o cambiar padding al bajar el scroll).
+  3) Mantener la posición fija arriba de la pantalla (pegado al top) como un header fijo.
+
+Contexto de código actual (referencia)
+- Componente actual (para que sepas de cuál hablo):
+
+  - Nombre del componente: `Navigation`
+  - Importa: `Link, useLocation` de `"wouter"`, iconos de `"lucide-react"`, `useState`, `useEffect`, `Button`, `Sheet`, `SheetContent`, `SheetTrigger`.
+  - Tiene este patrón:
+    - `const [scrolled, setScrolled] = useState(false);`
+    - `useEffect` que añade un listener de scroll y modifica `scrolled` según `window.scrollY > 20`.
+    - En `<nav>` usa una clase condicional según `scrolled` para cambiar fondo, sombra y `py-3`/`py-5`.
+    - Estructura: logo a la izquierda, menú de escritorio (links + botón Book Now), menú mobile con `<Sheet>` y `<Menu />`.
+
+Cambios que debes hacer
+
+1) Renombrar el componente Navigation a Header en TODO el proyecto
+- Donde actualmente esté definido el componente:
+
+  ```tsx
+  export function Navigation() {
+    ...
+  }
+````
+
+cámbialo a:
+
+```tsx
+export function Header() {
+  ...
+}
+```
+
+* Si el archivo se llama algo como `Navigation.tsx` o `navigation.tsx`:
+
+  * Renómbralo a `Header.tsx` (o `header.tsx`) para ser consistente con el nuevo nombre del componente.
+* En TODO el proyecto:
+
+  * Busca todas las referencias a `<Navigation />` y cámbialas a `<Header />`.
+  * Actualiza los imports que digan algo como:
+
+    * `import { Navigation } from "@/components/navigation";`
+    * para que pasen a ser:
+    * `import { Header } from "@/components/header";` (ajusta la ruta según cómo se llame el archivo tras renombrarlo).
+* No cambies otros componentes ni sus nombres. Solo este.
+
+2. El header NO debe cambiar ni moverse visualmente con el scroll
+
+* El header debe seguir fijo arriba (como ya está con `fixed top-0 left-0 right-0`), pero sin efectos de cambiar su altura, padding, fondo, sombra, etc. cuando el usuario hace scroll.
+* Elimina toda la lógica relacionada con `scrolled`:
+
+  * Quita el estado:
+
+    * `const [scrolled, setScrolled] = useState(false);`
+  * Quita el `useEffect` entero que escucha el scroll:
+
+    * Todo el bloque que hace `window.addEventListener("scroll", handleScroll)` y actualiza `setScrolled(window.scrollY > 20)`.
+  * El `<nav>` actualmente tiene una clase condicional según `scrolled`, algo como:
+
+    ```tsx
+    className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${
+      scrolled
+        ? "bg-white/80 backdrop-blur-md border-border shadow-sm py-3"
+        : "bg-white border-transparent py-5"
+    }`}
+    ```
+
+    Debes reemplazarlo por clases estáticas que NO dependan de `scrolled`, por ejemplo:
+
+    ```tsx
+    className="fixed top-0 left-0 right-0 z-50 border-b bg-white py-5"
+    ```
+
+    (Puedes mantener un estilo similar, pero siempre el mismo; lo importante es que no cambie según el scroll).
+* Resultado esperado:
+
+  * Cuando el usuario haga scroll hacia abajo o hacia arriba:
+
+    * El header no “salta” de `py-5` a `py-3` ni cambia de fondo/blur.
+    * Se mantiene exactamente igual, con el mismo tamaño y aspecto siempre.
+  * El header permanece fijo en la parte superior de la ventana (como ya estaba), sin moverse con el contenido.
+
+3. Mantener toda la funcionalidad actual (desktop + mobile) tal cual
+
+* No modifiques:
+
+  * La lista de `links` (Home, Services, Our Team, Promotions, Results, FAQ, Contact).
+  * El comportamiento del menú de escritorio (`hidden md:flex ...`).
+  * El comportamiento del menú móvil (`md:hidden` con `<Sheet>` y `<Menu />`).
+  * Los botones y componentes de UI (Button, Sheet, etc.).
+* Solo cambia:
+
+  * El nombre del componente y del archivo (Navigation → Header).
+  * Eliminar el estado `scrolled`, el `useEffect` y las clases condicionales basadas en `scrolled`.
+  * Dejar el `<nav>` con clases estáticas que mantengan el header fijo arriba pero sin animaciones ni cambios por scroll.
+
+Resultado esperado final
+
+* El componente se llama `Header` en todas partes (archivo, export, imports, JSX).
+* El header:
+
+  * Está fijo en la parte superior (pegado al top).
+  * No cambia de tamaño ni de estilo cuando el usuario hace scroll.
+  * Sigue mostrando el menú de escritorio y el menú móvil exactamente como antes.
+
+```
+```
