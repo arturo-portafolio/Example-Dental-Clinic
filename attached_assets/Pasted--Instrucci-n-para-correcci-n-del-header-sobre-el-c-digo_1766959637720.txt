@@ -1,0 +1,56 @@
+```
+Instrucción para corrección del header (sobre el código YA generado)
+
+Objetivo
+- Ajustar SOLO el comportamiento responsive del header y el menú de navegación.
+- En escritorio (desktop) NO debe verse el menú hamburguesa.
+- En escritorio deben verse, en fila dentro del header, los mismos elementos que ahora están dentro del menú hamburguesa.
+- En móvil SÍ debe verse el menú hamburguesa con esos mismos elementos dentro.
+- No cambies nada más del sitio.
+
+Cambios específicos (aplícalos sobre el header actual)
+
+1) Menú hamburguesa oculto en escritorio
+- Asegúrate de que el botón de menú hamburguesa solo sea visible en pantallas móviles.
+- Implementa la visibilidad con clases responsive o media queries, por ejemplo (si usas Tailwind, ajusta nombres según tu código):
+  - Para el botón hamburguesa:
+    - En móvil: visible (por ejemplo `flex` o `block`).
+    - En escritorio: oculto (por ejemplo `hidden md:hidden lg:hidden`).
+  - Regla clara:
+    - Viewport móvil: botón hamburguesa VISIBLE.
+    - Viewport escritorio: botón hamburguesa TOTALMENTE OCULTO.
+
+2) Navegación en fila en escritorio
+- Toma los mismos elementos (links) que aparecen dentro del menú hamburguesa (Home, Services, Before & After, Team, Promotions, FAQ, Contact, etc.).
+- Esos elementos deben:
+  - Estar dentro de un contenedor de navegación que se muestre:
+    - Oculto en móvil.
+    - Visible en escritorio, en fila (uno al lado del otro) dentro del header.
+- Implementación típica (adaptar a tu código):
+  - Contenedor de links de navegación:
+    - En móvil: `hidden` (u otra clase equivalente para que NO se vean).
+    - En escritorio: `flex` o `inline-flex` (por ejemplo `hidden md:flex`), con `gap` entre items para alinearlos en fila.
+- Regla clara:
+  - Viewport móvil: solo se ve el botón hamburguesa (y el panel que se abre al pulsarlo).
+  - Viewport escritorio: NO se ve el botón hamburguesa, solo se ven los links en fila en el header.
+
+3) Mantener el resto igual
+- No cambies:
+  - Textos, colores, logos ni estilos fuera del header.
+  - El comportamiento del menú hamburguesa en móvil (puede seguir abriendo/cerrando el panel como está).
+  - Cualquier funcionalidad de otras secciones (Home, Services, Gallery, etc.).
+- Solo ajusta:
+  - Las clases / estilos / media queries que controlan qué se muestra u oculta en móvil vs escritorio para:
+    - El botón hamburguesa.
+    - El contenedor de links en fila del header.
+
+Resultado esperado
+- En móvil:
+  - Header fijo arriba.
+  - Se ve el botón hamburguesa.
+  - Al abrir, se muestran los enlaces dentro del panel.
+- En escritorio:
+  - Header fijo arriba.
+  - NO se ve el botón hamburguesa.
+  - Se ven los enlaces del menú en fila dentro del header.
+```

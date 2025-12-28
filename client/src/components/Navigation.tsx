@@ -50,7 +50,7 @@ export function Navigation() {
         </Link>
 
         {/* Desktop Menu */}
-        <div className="hidden lg:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-8">
           {links.map((link) => (
             <Link key={link.href} href={link.href}>
               <span
@@ -69,7 +69,7 @@ export function Navigation() {
         </div>
 
         {/* Mobile Menu */}
-        <div className="lg:hidden flex items-center gap-4">
+        <div className="md:hidden flex items-center gap-4">
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon">
