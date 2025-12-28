@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useServices, usePromotions, useTeam } from "@/hooks/use-content";
 import { ServiceCard } from "@/components/ServiceCard";
 import { ArrowRight, Star, ShieldCheck, Clock, Award } from "lucide-react";
+import { SiGoogle } from "react-icons/si";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 
@@ -196,8 +197,18 @@ export default function Home() {
       {/* Testimonials */}
       <section className="py-24 bg-white">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center mb-16">
+          <div className="flex flex-col items-center justify-center text-center mb-16 gap-4">
             <h2 className="text-3xl md:text-4xl font-display font-bold">What Our Patients Say</h2>
+            <div className="flex items-center gap-2 px-4 py-2 bg-slate-50 border rounded-full shadow-sm">
+              <SiGoogle className="text-[#4285F4] w-5 h-5" />
+              <div className="flex items-center gap-1">
+                <span className="text-sm font-bold">4.9</span>
+                <div className="flex">
+                  {[1,2,3,4,5].map(i => <Star key={i} className="w-3 h-3 fill-yellow-400 text-yellow-400" />)}
+                </div>
+              </div>
+              <span className="text-xs text-muted-foreground border-l pl-2 ml-1">Google Reviews</span>
+            </div>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
