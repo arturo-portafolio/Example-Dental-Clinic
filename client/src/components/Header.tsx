@@ -19,7 +19,7 @@ export function Header() {
 
   return (
     <nav
-      className="fixed top-0 left-0 right-0 z-50 border-b bg-white py-5"
+      className="z-50 border-b bg-white py-5"
     >
       <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
         <Link href="/">
