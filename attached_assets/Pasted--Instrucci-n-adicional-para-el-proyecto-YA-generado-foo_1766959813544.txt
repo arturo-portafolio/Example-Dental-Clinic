@@ -1,0 +1,70 @@
+```
+Instrucción adicional para el proyecto YA generado (footer + pantalla de Admin Login)
+
+Objetivo
+- Agregar un enlace “Admin Login” en el footer que redirija a una nueva pantalla de login de administrador.
+- La pantalla de login debe ser SOLO una plantilla visual: un cuadro centrado con dos inputs (correo y contraseña) y un botón.
+- No agregar ninguna base de datos ni lógica real de autenticación; es solo una muestra visual.
+
+Cambios específicos
+
+1) Agregar texto/enlace “Admin Login” en el footer
+- En el componente de footer existente:
+  - Añade, al final o en una sección adecuada, un texto/enlace que diga exactamente: `Admin Login` (en inglés).
+  - Este texto debe funcionar como un link (o botón tipo link) que redirija a una nueva ruta/página, por ejemplo:
+    - `/admin-login` (puedes usar este path, o `/admin`, pero mantenlo consistente en todos lados).
+- Estilo:
+  - Mantén el estilo del footer actual.
+  - Puedes usar un estilo discreto tipo link (subrayado al pasar el mouse) para “Admin Login”.
+- Importante:
+  - No modifiques los demás elementos del footer.
+  - Solo añade el enlace “Admin Login” y su navegación.
+
+2) Crear nueva plantilla/página para el Admin Login
+- Crea una nueva página/plantilla accesible en la ruta elegida, por ejemplo:
+  - `/admin-login` (si estás usando Next.js: `app/admin-login/page.tsx` o `pages/admin-login.tsx`).
+- Contenido de esta página:
+  - Fondo simple (puede ser el mismo fondo blanco del sitio).
+  - Un contenedor centrado vertical y horizontalmente (pantalla completa), por ejemplo:
+    - Usar `min-height: 100vh` y `display: flex; align-items: center; justify-content: center;`.
+  - Dentro de ese contenedor, un cuadro (card) con:
+    - Un título en inglés, por ejemplo: `Admin Login`.
+    - Un pequeño texto opcional debajo, algo como: `Enter your credentials to continue.` (puramente decorativo).
+    - Dos inputs con sus labels, alineados en columna:
+      1) Label: `Email` + input tipo texto/email.
+      2) Label: `Password` + input tipo `password`.
+    - Un botón debajo de los inputs, por ejemplo con el texto: `Log In`.
+- Estilo de la card:
+  - Fondo blanco.
+  - Bordes redondeados.
+  - Sombra suave.
+  - Espaciado interno (padding) cómodo.
+  - Ancho máximo moderado (por ejemplo, 320–400px) para que parezca un formulario de login típico.
+
+3) Comportamiento (sin base de datos ni auth real)
+- El formulario de Admin Login NO debe conectarse a ninguna base de datos.
+- No implementar lógica real de autenticación ni guardado de sesión.
+- Opciones aceptables:
+  - O bien que el botón `Log In` no haga nada relevante (puedes prevenir el submit y solo mostrar un mensaje de ejemplo).
+  - O que el formulario lance un `preventDefault()` y muestre un mensaje de demostración tipo `This is a demo login form.`.
+- Importante:
+  - No implementar llamadas a API para login real.
+  - No agregar nuevas dependencias de autenticación ni librerías de base de datos.
+  - Mantener esto como una plantilla de UI lista para que, si en el futuro se quiere, se conecte a una API real.
+
+4) Mantener el resto del sitio igual
+- No modificar otros textos, secciones, colores o comportamientos fuera del footer y la nueva página de Admin Login.
+- No tocar el header ni las páginas actuales (Home, Services, Before & After, Team, Promotions, FAQ, Contact, etc.).
+- Todo el contenido visible al usuario (incluyendo “Admin Login”, labels de los inputs y el botón) debe seguir estando en inglés.
+
+Resultado esperado
+- En cualquier página del sitio, el footer muestra un enlace/texto “Admin Login”.
+- Al hacer click en “Admin Login”:
+  - El usuario es redirigido a la ruta elegida (por ejemplo `/admin-login`).
+  - Se ve una pantalla limpia con un cuadro centrado que contiene:
+    - Título “Admin Login”.
+    - Input para “Email”.
+    - Input para “Password”.
+    - Botón “Log In”.
+- No hay conexión a base de datos ni autenticación real; es solo una plantilla lista para ser conectada en el futuro.
+```

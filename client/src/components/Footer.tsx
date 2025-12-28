@@ -76,8 +76,13 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-slate-800 pt-8 text-center text-slate-500 text-sm">
+        <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-sm">
           <p>&copy; {new Date().getFullYear()} BrightSmile Dental. All rights reserved.</p>
+          <Link href="/admin-login">
+            <span className="hover:text-primary transition-colors cursor-pointer underline underline-offset-4 decoration-slate-700 hover:decoration-primary">
+              Admin Login
+            </span>
+          </Link>
         </div>
       </div>
     </footer>

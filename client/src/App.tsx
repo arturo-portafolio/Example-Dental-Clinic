@@ -13,6 +13,7 @@ import Gallery from "@/pages/Gallery";
 import Faq from "@/pages/Faq";
 import Contact from "@/pages/Contact";
 import Admin from "@/pages/Admin";
+import AdminLogin from "@/pages/AdminLogin";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -26,6 +27,7 @@ function Router() {
       <Route path="/faq" component={Faq} />
       <Route path="/contact" component={Contact} />
       <Route path="/admin" component={Admin} />
+      <Route path="/admin-login" component={AdminLogin} />
       <Route component={NotFound} />
     </Switch>
   );
