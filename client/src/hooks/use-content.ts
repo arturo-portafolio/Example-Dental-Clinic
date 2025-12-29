@@ -36,15 +36,53 @@ export function useUpdateService() {
 }
 
 // === TEAM ===
+const TEAM_FALLBACK: TeamMember[] = [
+  {
+    id: 1,
+    name: "Dr. Sarah Bennett",
+    role: "Lead Dentist",
+    bio: "Dr. Bennett has over 15 years of experience in restorative and cosmetic dentistry. She loves creating confident smiles.",
+    image: "",
+  },
+  {
+    id: 2,
+    name: "Dr. Michael Chen",
+    role: "Orthodontist",
+    bio: "Specializing in Invisalign and braces, Dr. Chen helps patients of all ages achieve a straighter, healthier smile.",
+    image: "",
+  },
+  {
+    id: 3,
+    name: "Dr. Emily Rodriguez",
+    role: "Hygienist",
+    bio: "Emily focuses on preventive care and patient comfort, ensuring every visit is smooth and informative.",
+    image: "",
+  },
+];
+
 export function useTeam() {
   const TEAM_PATH = "/api/team";
 
   return useQuery({
     queryKey: [TEAM_PATH],
     queryFn: async () => {
-      const res = await fetch(TEAM_PATH);
-      if (!res.ok) throw new Error("Failed to fetch team");
-      return api.team.list.responses[200].parse(await res.json());
+      try {
+        const res = await fetch(TEAM_PATH);
+        if (!res.ok) throw new Error("Failed to fetch team");
+
+        const json = await res.json();
+
+        // Intenta validar; si no cuadra el esquema, usa fallback
+        const schema: any = api.team.list.responses[200];
+        if (schema?.safeParse) {
+          const parsed = schema.safeParse(json);
+          return parsed.success ? parsed.data : TEAM_FALLBACK;
+        }
+
+        return schema?.parse ? schema.parse(json) : json;
+      } catch {
+        return TEAM_FALLBACK;
+      }
     },
   });
 }
