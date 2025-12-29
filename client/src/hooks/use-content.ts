@@ -7,18 +7,83 @@ import type {
 } from "@shared/schema";
 
 // === SERVICES ===
+const SERVICES_FALLBACK: Service[] = ([
+  {
+    id: 1,
+    title: "General Cleaning",
+    category: "Preventive",
+    description: "Professional cleaning to keep your teeth and gums healthy with a gentle touch.",
+    price: 120,
+    image: "",
+  },
+  {
+    id: 2,
+    title: "Whitening",
+    category: "Cosmetic",
+    description: "Brighten your smile safely and quickly with modern whitening techniques.",
+    price: 350,
+    image: "",
+  },
+  {
+    id: 3,
+    title: "Invisalign",
+    category: "Cosmetic",
+    description: "Clear aligners to straighten your teeth discreetly.",
+    price: 0,
+    image: "",
+  },
+  {
+    id: 4,
+    title: "Dental Implants",
+    category: "Restorative",
+    description: "Permanent, natural-looking solution for missing teeth.",
+    price: 1500,
+    image: "",
+  },
+  {
+    id: 5,
+    title: "Emergency",
+    category: "Urgent Care",
+    description: "Fast relief for tooth pain, broken teeth, or urgent dental concerns.",
+    price: 0,
+    image: "",
+  },
+  {
+    id: 6,
+    title: "Consultation",
+    category: "General",
+    description: "Meet our specialists and get a personalized treatment plan.",
+    price: 0,
+    image: "",
+  },
+] as unknown) as Service[];
+
 export function useServices() {
   const SERVICES_PATH = "/api/services";
 
   return useQuery({
     queryKey: [SERVICES_PATH],
     queryFn: async () => {
-      const res = await fetch(SERVICES_PATH);
-      if (!res.ok) throw new Error("Failed to fetch services");
-      return api.services.list.responses[200].parse(await res.json());
+      try {
+        const res = await fetch(SERVICES_PATH);
+        if (!res.ok) throw new Error("Failed to fetch services");
+
+        const json = await res.json();
+
+        const schema: any = api.services.list.responses[200];
+        if (schema?.safeParse) {
+          const parsed = schema.safeParse(json);
+          return parsed.success ? parsed.data : SERVICES_FALLBACK;
+        }
+
+        return schema?.parse ? schema.parse(json) : json;
+      } catch {
+        return SERVICES_FALLBACK;
+      }
     },
   });
 }
+
 
 
 export function useUpdateService() {
