@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { Menu } from "lucide-react";
+import { Menu, ClipboardPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
@@ -24,11 +24,7 @@ export function Header() {
         <Link href="/">
           <div className="flex items-center gap-2 cursor-pointer group">
             <div className="bg-primary/10 p-2 rounded-xl group-hover:bg-primary/20 transition-colors">
-              <img
-                src="/favicon.ico"
-                alt="BrightSmile"
-                className="w-6 h-6"
-              />
+              <ClipboardPlus className="w-6 h-6 text-primary" />
             </div>
             <div>
               <span className="font-display font-bold text-xl text-foreground leading-none block">
