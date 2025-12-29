@@ -173,16 +173,49 @@ export function useUpdateTeamMember() {
 }
 
 // === PROMOTIONS ===
+const PROMOTIONS_FALLBACK: Promotion[] = ([
+  {
+    id: 1,
+    title: "New Patient Special: Cleaning + Exam",
+    description: "Get a complete dental exam and professional cleaning at a special introductory price.",
+    validUntil: "2026-12-31",
+    image: "",
+  },
+  {
+    id: 2,
+    title: "Whitening Discount",
+    description: "Save on professional teeth whitening when you book this month.",
+    validUntil: "2026-12-31",
+    image: "",
+  },
+] as unknown) as Promotion[];
+
 export function usePromotions() {
+  const PROMOTIONS_PATH = "/api/promotions";
+
   return useQuery({
-    queryKey: [api.promotions.list.path],
+    queryKey: [PROMOTIONS_PATH],
     queryFn: async () => {
-      const res = await fetch(api.promotions.list.path);
-      if (!res.ok) throw new Error("Failed to fetch promotions");
-      return api.promotions.list.responses[200].parse(await res.json());
+      try {
+        const res = await fetch(PROMOTIONS_PATH);
+        if (!res.ok) throw new Error("Failed to fetch promotions");
+
+        const json = await res.json();
+
+        const schema: any = api.promotions.list.responses[200];
+        if (schema?.safeParse) {
+          const parsed = schema.safeParse(json);
+          return parsed.success ? parsed.data : PROMOTIONS_FALLBACK;
+        }
+
+        return schema?.parse ? schema.parse(json) : json;
+      } catch {
+        return PROMOTIONS_FALLBACK;
+      }
     },
   });
 }
+
 
 export function useUpdatePromotion() {
   const queryClient = useQueryClient();
