@@ -1,6 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { Menu, X, Phone, Calendar, Stethoscope } from "lucide-react";
-import { useState, useEffect } from "react";
+import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
@@ -25,7 +24,11 @@ export function Header() {
         <Link href="/">
           <div className="flex items-center gap-2 cursor-pointer group">
             <div className="bg-primary/10 p-2 rounded-xl group-hover:bg-primary/20 transition-colors">
-              <Stethoscope className="w-6 h-6 text-primary" />
+              <img
+                src="/favicon.ico"
+                alt="BrightSmile"
+                className="w-6 h-6"
+              />
             </div>
             <div>
               <span className="font-display font-bold text-xl text-foreground leading-none block">
