@@ -8,15 +8,18 @@ import type {
 
 // === SERVICES ===
 export function useServices() {
+  const SERVICES_PATH = "/api/services";
+
   return useQuery({
-    queryKey: [api.services.list.path],
+    queryKey: [SERVICES_PATH],
     queryFn: async () => {
-      const res = await fetch(api.services.list.path);
+      const res = await fetch(SERVICES_PATH);
       if (!res.ok) throw new Error("Failed to fetch services");
       return api.services.list.responses[200].parse(await res.json());
     },
   });
 }
+
 
 export function useUpdateService() {
   const queryClient = useQueryClient();
