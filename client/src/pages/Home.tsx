@@ -49,14 +49,14 @@ export default function Home() {
             
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/contact">
-                <Button size="lg" className="w-full sm:w-auto rounded-full text-base sm:text-lg h-12 sm:h-14 px-6 sm:px-8 shadow-xl shadow-primary/20 hover:shadow-2xl hover:shadow-primary/30 transition-all">
+                <Button size="lg" className="rounded-full text-lg h-14 px-8 shadow-xl shadow-primary/20 hover:shadow-2xl hover:shadow-primary/30 transition-all">
                   Book Appointment
                 </Button>
-
-                <Button variant="outline" size="lg" className="w-full sm:w-auto rounded-full text-base sm:text-lg h-12 sm:h-14 px-6 sm:px-8 border-2 hover:bg-white/50">
+              </Link>
+              <Link href="/services">
+                <Button variant="outline" size="lg" className="rounded-full text-lg h-14 px-8 border-2 hover:bg-white/50">
                   View Services
                 </Button>
-
               </Link>
             </div>
 
