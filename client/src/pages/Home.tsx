@@ -243,13 +243,21 @@ export default function Home() {
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
             Schedule your consultation today and take the first step towards the smile you've always dreamed of.
           </p>
-          <div className="flex justify-center gap-4">
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link href="/contact">
-              <Button size="lg" className="rounded-full px-10 text-lg h-14 shadow-lg shadow-primary/20">
+              <Button
+                size="lg"
+                className="w-full sm:w-auto rounded-full px-6 sm:px-10 text-base sm:text-lg h-12 sm:h-14 shadow-lg shadow-primary/20"
+              >
                 Book Appointment
               </Button>
             </Link>
-            <Button variant="outline" size="lg" className="rounded-full h-14 px-8 bg-white hover:bg-white/80">
+
+            <Button
+              variant="outline"
+              size="lg"
+              className="w-full sm:w-auto rounded-full h-12 sm:h-14 px-6 sm:px-8 bg-white hover:bg-white/80 text-base sm:text-lg"
+            >
               Call (555) 123-4567
             </Button>
           </div>
