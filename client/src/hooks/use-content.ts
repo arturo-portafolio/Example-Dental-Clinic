@@ -264,13 +264,47 @@ export function useUpdateFaq() {
 }
 
 // === GALLERY ===
+const GALLERY_FALLBACK: GalleryItem[] = ([
+  {
+    id: 1,
+    title: "Whitening Treatment",
+    beforeImage:
+      "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&q=80&w=1200",
+    afterImage:
+      "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&q=80&w=1200",
+  },
+  {
+    id: 2,
+    title: "Invisalign Results",
+    beforeImage:
+      "https://images.unsplash.com/photo-1629909615184-74fbe0b9d3c9?auto=format&fit=crop&q=80&w=1200",
+    afterImage:
+      "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?auto=format&fit=crop&q=80&w=1200",
+  },
+] as unknown) as GalleryItem[];
+
 export function useGallery() {
+  const GALLERY_PATH = "/api/gallery";
+
   return useQuery({
-    queryKey: [api.gallery.list.path],
+    queryKey: [GALLERY_PATH],
     queryFn: async () => {
-      const res = await fetch(api.gallery.list.path);
-      if (!res.ok) throw new Error("Failed to fetch gallery");
-      return api.gallery.list.responses[200].parse(await res.json());
+      try {
+        const res = await fetch(GALLERY_PATH);
+        if (!res.ok) throw new Error("Failed to fetch gallery");
+
+        const json = await res.json();
+
+        const schema: any = api.gallery.list.responses[200];
+        if (schema?.safeParse) {
+          const parsed = schema.safeParse(json);
+          return parsed.success ? parsed.data : GALLERY_FALLBACK;
+        }
+
+        return schema?.parse ? schema.parse(json) : json;
+      } catch {
+        return GALLERY_FALLBACK;
+      }
     },
   });
 }
