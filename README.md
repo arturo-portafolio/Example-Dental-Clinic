@@ -4,7 +4,7 @@ This repository contains the **BrightSmile Dental** web app built with **React +
 
 ## Live Demo
 
-- https://example-dentist-clinic.vercel.app/
+- https://example-dental-clinic.vercel.app/
 
 ## Why `vercel.json` was needed
 
