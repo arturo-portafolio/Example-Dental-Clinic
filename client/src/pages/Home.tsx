@@ -183,7 +183,7 @@ export default function Home() {
                 <div className="hidden md:block relative">
                    {/* Dental tools on clean background */}
                    <img 
-                    src="https://pixabay.com/get/g933b550c8c1861b5f490196daaadc1bba5e04564e2d0f6ae843473ecf6482ab204dd32a2b116700bb087d47ae0e2845fb7dfb732e8fd6336636b15c906ab452f_1280.jpg"
+                    src="/dental-tools.png"
                     alt="Dental Tools"
                     className="rounded-2xl shadow-lg transform rotate-2 hover:rotate-0 transition-transform duration-500"
                    />
